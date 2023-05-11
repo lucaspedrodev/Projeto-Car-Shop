@@ -17,4 +17,14 @@ export default class CarService {
 
     return this.createCarDomain(newCar);
   }
+
+  public async findCar(id:string | null = null) {
+    const carModel = new CarModel();
+    if (id) {
+      const car = await carModel.getById(id);
+      return this.createCarDomain(car);
+    }
+    const cars = await carModel.getAll();
+    return cars.map((car) => this.createCarDomain(car));
+  }
 }
