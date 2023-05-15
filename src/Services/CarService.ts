@@ -27,4 +27,10 @@ export default class CarService {
     const cars = await carModel.getAll();
     return cars.map((car) => this.createCarDomain(car));
   }
+
+  public async updateCar(id: string, body: ICar): Promise<Car | null> {
+    const carModel = new CarModel();
+    const updatedCar = await carModel.updateCar(id, body);    
+    return this.createCarDomain(updatedCar);
+  }
 }
