@@ -25,4 +25,10 @@ export default class MotorcycleService {
     const cars = await motorcycleModel.getAllVehicles();
     return cars.map((motorcycle) => this.createMotorcycleDomain(motorcycle));
   }
+
+  public async updateMotorcycle(id: string, body: IMotorcycle): Promise<Motorcycle | null> {
+    const carModel = new MotorcycleModel();
+    const updatedCar = await carModel.updateVehicle(id, body);    
+    return this.createMotorcycleDomain(updatedCar);
+  }
 }
