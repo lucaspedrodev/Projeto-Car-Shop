@@ -1,35 +1,32 @@
-import { Model, model, models, Schema } from 'mongoose';
+import { Schema } from 'mongoose';
 import ICar from '../Interfaces/ICar';
+import AbstractODM from './AbstractODM';
 
-export default class CarModel {
-  private schema: Schema;
-  private model: Model<ICar>;
-
+export default class CarM extends AbstractODM<ICar> {
   constructor() {
-    this.schema = new Schema<ICar>({
+    const schema = new Schema<ICar>({
       model: { type: String, required: true },
       year: { type: Number, required: true },
       color: { type: String, required: true },
-      status: { type: Boolean, required: false },
+      status: { type: Boolean },
       buyValue: { type: Number, required: true },
       doorsQty: { type: Number, required: true },
       seatsQty: { type: Number, required: true },
     });
-    this.model = models.Car || model('Car', this.schema);
-  }
-
-  public async createCar(car: ICar): Promise<ICar> {
-    return this.model.create({ ...car });
-  }
-
-  public async getAll(): Promise<ICar[]> {
-    return this.model.find();
-  }
-
-  public async getById(id: string): Promise<ICar | null> { 
-    return this.model.findById(id);
-  }
-  public async updateCar(id:string, body: ICar): Promise<ICar | null> {
-    return this.model.findByIdAndUpdate({ _id: id }, body, { new: true });
+    super(schema, 'Car');
   }
 }
+// public async createCar(car: ICar): Promise<ICar> {
+//   return this.model.create({ ...car });
+// }
+
+// public async getAll(): Promise<ICar[]> {
+//   return this.model.find();
+// }
+
+// public async getById(id: string): Promise<ICar | null> { 
+//   return this.model.findById(id);
+// }
+// public async updateCar(id:string, body: ICar): Promise<ICar | null> {
+//   return this.model.findByIdAndUpdate({ _id: id }, body, { new: true });
+// }
