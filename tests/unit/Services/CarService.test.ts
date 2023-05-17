@@ -7,6 +7,10 @@ import mock from './MockCarService';
 const { expect } = chai;
 
 describe('testa a camada service de CarService', function () {
+  afterEach(function () {
+    sinon.restore();
+  });
+
   it('testa se cadastra um carro novo', async function () {
     sinon.stub(Model, 'create').resolves(mock.carOne);
 
@@ -25,7 +29,7 @@ describe('testa a camada service de CarService', function () {
     expect(result).to.be.deep.equal(mock.allCars);
   });
 
-  it('testa se lista apenas um veículo narota /cars', async function () {
+  it('testa se lista apenas um veículo na rota /cars', async function () {
     sinon.stub(Model, 'findOne').resolves(mock.carOne);
 
     const service = new CarService();
